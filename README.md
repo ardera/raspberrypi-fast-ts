@@ -4,25 +4,23 @@ A faster, lower-latency, userspace touchscreen input driver for the official Ras
 #### Compatibility
 Only tested on Pi 4. It's possible it works on Pi 3 too. Will not work on Pi 2 or 1.
 
-#### Building
+#### Installation Instructions
 ```bash
 $ git clone https://github.com/ardera/raspberrypi-fast-ts.git
 $ cd raspberrypi-fast-ts
-$ gcc -O2 ./raspberrypi-fast-ts.c -o ./raspberrypi-fast-ts
+$ make
+$ sudo make install
 ```
 
-#### Configuring your Pi
-1. `$ sudo nano /boot/config.txt`
-2. add the following lines:
+After that, the driver is installed, but not yet enabled. To enable it and disable the old driver, see the following steps. *Be aware this makes changes to `/boot/config.txt`.* The installation script is rather dumb. If your `config.txt` is heavily modified, you can apply the changes manually, just look at how the Makefile does it.
+```bash
+$ sudo make enable
 ```
-disable_touchscreen=1
-dtparam=i2c_vc=on
-dtparam=i2c_vc_baudrate=400000
-```
-3. save & reboot
 
-#### Running
-```
-$ sudo modprobe uinput
-$ sudo ./raspberrypi-fast-ts
-```
+After a reboot, the new driver will be used.
+
+#### Switching back to the old driver
+To switch back to the old driver:
+- remove the 5 last lines of `/boot/config.txt`
+- remove the `uinput` line from `/etc/modules`
+- run `sudo systemctl disable raspberrypi-fast-ts.service`
