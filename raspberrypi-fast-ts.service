@@ -1,0 +1,9 @@
+[Unit]
+Description=Launches the rasberrypi-fast-ts userspace touchscreen driver
+
+[Service]
+Type=Simple
+ExecStart=/usr/local/bin/raspberrypi-fast-ts
+
+[Install]
+WantedBy=multi-user.target
