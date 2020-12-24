@@ -4,24 +4,6 @@ A faster, lower-latency, userspace touchscreen input driver for the official Ras
 #### Compatibility
 Only tested on Pi 4. It's possible it works on Pi 3 too. Will not work on Pi 2 or 1.
 
-#### Backlight interface
-This driver now has a backlight interface similiar to the standard sysfs one.
-It's located inside `/var/tmp/raspberrypi-fast-ts`. Currently, `bl_power` and `brightness` are supported.
-
-You can use it just like the sysfs interface, for example to change the brightness to 50%:
-```
-$ sudo bash
-# echo 127 > /var/tmp/raspberrypi-fast-ts/brightness
-# exit
-```
-
-to change it to 100% again:
-```
-$ sudo bash
-# echo 255 > /var/tmp/raspberrypi-fast-ts/brightness
-# exit 
-```
-
 #### Installation Instructions
 ```bash
 $ git clone https://github.com/ardera/raspberrypi-fast-ts.git
@@ -47,3 +29,21 @@ To switch back to the old driver:
 - remove the 5 last lines of `/boot/config.txt`
 - remove the `uinput` line from `/etc/modules`
 - run `sudo systemctl disable raspberrypi-fast-ts.service`
+
+#### Backlight interface
+This driver now has a backlight interface similiar to the standard sysfs one.
+It's located inside `/var/tmp/raspberrypi-fast-ts`. Currently, `bl_power` and `brightness` are supported.
+
+You can use it just like the sysfs interface, for example to change the brightness to 50%:
+```
+$ sudo bash
+# echo 127 > /var/tmp/raspberrypi-fast-ts/brightness
+# exit
+```
+
+to change it to 100% again:
+```
+$ sudo bash
+# echo 255 > /var/tmp/raspberrypi-fast-ts/brightness
+# exit 
+```
