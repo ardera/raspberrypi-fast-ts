@@ -724,7 +724,7 @@ int main(int argc, char **argv) {
 
             if (has_value && brightness_value >= 0 && brightness_value <= 255) {
                 ok = write_byte(i2c_fd, 0x45, 0x86, (uint8_t) brightness_value);
-                if ((ok < 0) && (errno != EREMOTEIO)) {
+                if ((ok < 0) && (errno != EREMOTEIO) && (errno != ETIMEDOUT)) {
                     goto fail_close_timer;
                 }
                 brightness = brightness_value;
@@ -746,7 +746,7 @@ int main(int argc, char **argv) {
 
             if (has_value) {
                 ok = write_byte(i2c_fd, 0x45, 0x86, bl_power_value? 0 : brightness);
-                if ((ok < 0) && (errno != EREMOTEIO)) {
+                if ((ok < 0) && (errno != EREMOTEIO) && (errno != ETIMEDOUT)) {
                     goto fail_close_timer;
                 }
             }
@@ -761,7 +761,8 @@ int main(int argc, char **argv) {
             }
 
             ok = poll(ts);
-            if (ok != 0 && ok != EREMOTEIO) { // ignore remote I/O errors since they ocurr spuriously all the time
+            if ((ok != 0) && (ok != EREMOTEIO) && (ok != ETIMEDOUT)) {
+                // ignore remote I/O errors and timeouts since they ocurr spuriously all the time
                 goto fail_close_timer;
             }
         }
