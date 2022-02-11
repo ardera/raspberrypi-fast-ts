@@ -376,7 +376,7 @@ static int fifo_read_ul(struct fifo_data *data, bool *has_value_out, unsigned lo
                 ok = errno;
                 perror("Couldn't convert received FIFO value to a number. strtoul");
                 goto fail_reset_buffer;
-            } else if ((end == '\0') || (end == data->buffer)) {
+            } else if ((end == "\0") || (end == data->buffer)) {
                 ok = EINVAL;
                 fprintf(stderr, "Invalid FIFO value received\n");
                 goto fail_reset_buffer;
